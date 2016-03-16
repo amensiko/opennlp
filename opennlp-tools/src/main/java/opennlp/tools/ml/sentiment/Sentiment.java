@@ -16,7 +16,7 @@ import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.model.ModelUtil;
 
 public class Sentiment {
-	private static final String[] STOP_WORDS = new String[] { "a", "the", "are"};
+	private static final String[] STOP_WORDS = new String[] { "a", "the", "are", "to", "be", "that"};
 	static {
 		Arrays.sort(STOP_WORDS);
 	}
@@ -28,9 +28,10 @@ public class Sentiment {
 		public Collection<String> extractFeatures(String[] text,
 				Map<String, Object> extraInformation) {
 			Collection<String> bagOfWords = new ArrayList<String>(text.length);
-
+			int index;
 			for (String word : text) {
-				if(Arrays.binarySearch(STOP_WORDS, word) == -1) {
+				index = Arrays.binarySearch(STOP_WORDS, word);
+				if(index < 0) {
 					bagOfWords.add("word=" + word);
 				}
 			}
